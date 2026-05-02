@@ -6,7 +6,7 @@ import Texto from './Texto'
 
 export default function EjGestos() {
   const [label, setLabel] = useState(null);
-
+  const [isPointing, setIsPointing] = useState(false);
   
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
@@ -53,6 +53,8 @@ export default function EjGestos() {
       //console.log(predictions);
       predictions.map((prediction) => setLabel(prediction.label));
 
+      setIsPointing(false);
+
       if (label === "open") {
         console.log("scrolling down");
       
@@ -61,11 +63,12 @@ export default function EjGestos() {
         console.log("scrolling up");
       
         window.scrollBy(0, -window.innerHeight);
-      } 
-      else 
+      } else if ( label === "point" ) {
+        console.log("pointing")
+        setIsPointing(true);
+      } else 
       {
         console.log("detecting...");
-      
       }
     }
   };
@@ -75,7 +78,7 @@ export default function EjGestos() {
         <div style = {{
           alignItems: 'center',
           display: 'flex',
-          backgroundColor: 'pink',
+          backgroundColor: isPointing ? 'blue' : 'pink',
           flexDirection: 'column',
           }}>
             <div>
@@ -86,8 +89,8 @@ export default function EjGestos() {
                 <Webcam
                     ref={webcamRef}
                     style={{
-                    width: 100,
-                    height: 100,
+                    width: 500,
+                    height: 500,
                 }}
             />
             <canvas
