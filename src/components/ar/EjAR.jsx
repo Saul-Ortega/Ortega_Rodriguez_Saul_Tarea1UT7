@@ -2,6 +2,7 @@
 import { Canvas} from "@react-three/fiber";
 import XrCube from './XrCube';
 import { ARButton, XR } from "@react-three/xr";
+import XrIcosahedron from "./XrIcosahedron";
 
 
 function EjAR(){
@@ -12,8 +13,8 @@ function EjAR(){
             <ARButton/>
             <Canvas>
                 <XR>
-                    <XrCube />
-                   
+                    {/* <XrCube /> */}
+                   <XrIcosahedron />
                 </XR>
             </Canvas>
         </>
