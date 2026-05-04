@@ -9,7 +9,7 @@ function Dashboard() {
                 <Toolbar >
                     <Grid container spacing={1} sx={{ width: '100%' }} >
 
-                        <Grid size={{xs:12, md:2, lg:2}}>        
+                        <Grid size={{xs:12, md:2, lg:1}}>        
                             <Link to={'/'} style={{textDecoration:'none', color:'white'}}>Inicio</Link>
                         </Grid>
 
@@ -31,6 +31,10 @@ function Dashboard() {
 
                         <Grid size={{xs:12, md:1, lg:1}}>        
                             <Link to={'/arsaul'} style={{textDecoration:'none', color:'white'}}>ARSaul</Link>
+                        </Grid>
+
+                        <Grid size={{xs:12, md:1, lg:1}}>        
+                            <Link to={'/vozlibros'} style={{textDecoration:'none', color:'white'}}>Voz Libros</Link>
                         </Grid>
                     </Grid>
                 </Toolbar >

@@ -13,6 +13,7 @@ import ARSaul from './components/ARSaul';
 //importamos la función createBrowserRouter y el componente RouterProvider
 //de la librería react-router-dom
 import {createBrowserRouter, RouterProvider} from 'react-router-dom'
+import VozLibros from './components/VozLibros';
 
 
 const router = createBrowserRouter([
@@ -35,19 +36,19 @@ const router = createBrowserRouter([
       {
         path: '/gestos',
         element: <Gestos />
-      }
-
-      ,
+      },
       {
         path: '/ar',
         element: <AR />
       },
       {
-        path: 'arsaul',
+        path: '/arsaul',
         element: <ARSaul />
+      },
+      {
+        path: '/vozlibros',
+        element: <VozLibros />
       }
-
-      
     ]
   }
 ])
