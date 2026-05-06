@@ -1,5 +1,5 @@
 import Webcam from "react-webcam";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import * as handTrack from 'handtrackjs';
 import Texto from './Texto'
 
@@ -8,6 +8,8 @@ export default function EjGestos() {
   const [label, setLabel] = useState(null);
   const [isPointing, setIsPointing] = useState(false);
   
+  const [model, setModel] = useState(null);
+
   const webcamRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -26,10 +28,8 @@ export default function EjGestos() {
 
   const runHandtrack = async () => {
     const model = await handTrack.load(defaultParams);
+    setModel(model);
     console.log("Model loaded");
-    setInterval(() => {
-      runDetection(model);
-    }, 3000);
   };
 
   const runDetection = async (model) => {
@@ -50,29 +50,45 @@ export default function EjGestos() {
 
       // Make Detections
       const predictions = await model.detect(video);
-      //console.log(predictions);
-      predictions.map((prediction) => setLabel(prediction.label));
+      // console.log(predictions);
+
+      let detectedLabel = "detecting...";
+
+      if ( predictions.length > 0 ) {
+        detectedLabel = predictions[predictions.length - 1].label;
+        setLabel(detectedLabel);
+      }
 
       setIsPointing(false);
 
-      if (label === "open") {
+      if ( detectedLabel === "open" ) {
         console.log("scrolling down");
-      
-        window.scrollBy(0, window.innerHeight);
-      } else if (label === "closed") {
+        window.scrollBy(0, window.innerHeight); 
+      } else if ( detectedLabel === "closed" ) {
         console.log("scrolling up");
-      
         window.scrollBy(0, -window.innerHeight);
-      } else if ( label === "point" ) {
-        console.log("pointing")
+      } else if ( detectedLabel === "point" ) {
+        console.log("pointing");
         setIsPointing(true);
-      } else 
-      {
+      } else {
         console.log("detecting...");
       }
     }
   };
-  runHandtrack();
+
+  useEffect(() => {
+    runHandtrack();
+  }, []);
+
+  useEffect(() => {
+    if (model) {
+      const interval = setInterval(() => {
+        runDetection(model);
+      }, 3000);
+      return () => clearInterval(interval);
+    }
+  }, [model]);
+
   return (
     <>
         <div style = {{
