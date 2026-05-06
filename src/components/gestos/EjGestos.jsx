@@ -41,6 +41,9 @@ export default function EjGestos() {
       const video = webcamRef.current.video;
       const videoWidth = webcamRef.current.video.videoWidth;
       const videoHeight = webcamRef.current.video.videoHeight;
+    
+      //When user scrolls down to very end of the page, it still detects gestures
+      await video.play();
 
       webcamRef.current.video.width = videoWidth;
       webcamRef.current.video.height = videoHeight;
@@ -63,7 +66,7 @@ export default function EjGestos() {
 
       if ( detectedLabel === "open" ) {
         console.log("scrolling down");
-        window.scrollBy(0, window.innerHeight); 
+        window.scrollBy(0, window.innerHeight);
       } else if ( detectedLabel === "closed" ) {
         console.log("scrolling up");
         window.scrollBy(0, -window.innerHeight);
@@ -101,7 +104,7 @@ export default function EjGestos() {
                 <h3> Ejemplo Detección Gestos Mano: abierta y cerrada </h3>
                 <p> Tienes que conceder acceso a la webcam </p>
             </div>
-            <div >
+            <div>
                 <Webcam
                     ref={webcamRef}
                     style={{
